@@ -1,0 +1,25 @@
+A PlanSaude é uma empresa que oferece Planos de Saúde.
+Ela deseja um sistema de informação para gerenciar suas atividades.
+
+A PlanSaude possui diversos médicos associados e deseja-se saber nome, número no Conselho Regional de Medicina (CRM) e Clinica que faz as consultas.
+
+Funcionários marcam consultas dos Clientes com os Médicos.
+Na marcação de uma consulta, deve-se informar o cliente (paciente), o médico, a data e a hora da consulta.
+
+Ao final do agendamento da consulta, o cliente recebe um comprovante do agendamento, conforme o modelo:
+
+==============================
+PlanSaúde - Sua saúde nos Planos
+Comprovante de agendamento de consulta médica
+Funcionário: {NOME_FUNCIONARIO}
+
+// Com fonte em negrito
+Data/Hora: {DATA}/{HORA}
+
+Médico: {NOME_MEDICO} ({CRM})
+Clinica: {NOME_CLINICA}
+Endereço: {ENDERECO_CLINICA}
+
+==============================
+
+Fonte: http://www.inf.ufes.br/~vitorsouza/wp-content/uploads/academia-br-modelagemuml-exercicio01.pdf
