@@ -1,0 +1,30 @@
+\tikzset{
+    decision/.style=  {diamond, draw, fill=blue!20, text width=0.4in, text centered, node distance=0.7in, inner sep=0pt, font=\scriptsize},
+    block/.style=     {rectangle, draw, fill=blue!20, text width=0.5in, text centered, rounded corners, minimum height=2em, font=\scriptsize, node distance=0.7in},
+    line/.style=      {draw, -latex'},
+    cloud/.style=     {draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em, font=\scriptsize},
+    decisionAnswer/.style={near start, color=black, font=\scriptsize}
+}
+
+% \coordinate[below=of welcome] (center);
+\begin{tikzpicture}[auto]
+  \node [decision] (if) {if};
+  \node [decision, right of=if] (else) {else};
+
+  \node [block, below of=if] (instrucaoif) {Instrução 1};
+  \node [block, right of=instrucaoif] (instrucaoelse) {Instrução 2};
+
+  \coordinate (Middle) at ($(instrucaoif)!0.5!(instrucaoelse)$);
+  \node [block, below of=Middle, node distance=0.7in] (fim) {Fim};
+
+  % Line V
+  \path [line] (if) -- node[decisionAnswer] {V} (instrucaoif);
+  \path [line] (else) -- (instrucaoelse);
+
+  % Line F
+  \path [line] (if) -- node[decisionAnswer] {F} (else);
+
+  % Line Fim
+  \path [line] (instrucaoif) -- (fim);
+  \path [line] (instrucaoelse) -- (fim);
+\end{tikzpicture}

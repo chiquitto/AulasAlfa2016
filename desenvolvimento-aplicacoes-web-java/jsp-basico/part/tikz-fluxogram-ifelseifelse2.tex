@@ -1,0 +1,111 @@
+% http://www.texample.net/tikz/examples/simple-flow-chart/
+% http://tex.stackexchange.com/questions/82124/positioning-a-child-node-between-two-parents
+
+% \node [block] (init) {\includegraphics{figure}};
+
+% Define block styles
+% \tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=5em, text badly centered, node distance=1in, inner sep=0pt, font=\scriptsize]
+% \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=5em, text centered, rounded corners, minimum height=2em, font=\scriptsize, node distance=1in]
+% \tikzstyle{line} = [draw, -latex']
+% \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em, font=\scriptsize]
+% \tikzstyle{decisionAnswer}=[near start, color=black, font=\scriptsize]
+% % use example: \path[line] (decide) -| node[decisionAnswer] {yes} (update);
+
+\tikzset{
+    decision/.style=  {diamond, draw, fill=blue!20, text width=0.4in, text centered, node distance=0.7in, inner sep=0pt, font=\scriptsize},
+    block/.style=     {rectangle, draw, fill=blue!20, text width=0.5in, text centered, rounded corners, minimum height=2em, font=\scriptsize, node distance=0.7in},
+    line/.style=      {draw, -latex'},
+    cloud/.style=     {draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em, font=\scriptsize},
+    decisionAnswer/.style={near start, color=black, font=\scriptsize}
+}
+
+% \coordinate[below=of welcome] (center);
+\begin{tikzpicture}[auto]
+  \node [decision] (if) {if};
+  \node [decision, right of=if] (elseif1) {else if};
+  \node [decision, right of=elseif1] (elseif2) {else if};
+  \node [decision, right of=elseif2] (else) {else};
+
+  \node [block, below of=if] (instrucaoif) {Instrução 1};
+  \node [block, right of=instrucaoif] (instrucaoelseif1) {Instrução 2};
+  \node [block, right of=instrucaoelseif1] (instrucaoelseif2) {Instrução 3};
+  \node [block, right of=instrucaoelseif2] (instrucaoelse) {Instrução 4};
+
+  \coordinate (Middle) at ($(instrucaoelseif1)!0.5!(instrucaoelseif2)$);
+  % \node (B) [below of=Middle] {B};
+  \node [block, below of=Middle, node distance=0.7in] (fim) {Fim};
+
+  % Line V
+  %\path [line] (if) -- node [near start] {V} (instrucaoif);
+  \path [line] (if) -- node[decisionAnswer] {V} (instrucaoif);
+  \path [line] (elseif1) -- node[decisionAnswer] {V} (instrucaoelseif1);
+  \path [line] (elseif2) -- node[decisionAnswer] {V} (instrucaoelseif2);
+  \path [line] (else) -- (instrucaoelse);
+
+  % Line F
+  \path [line] (if) -- node[decisionAnswer] {F} (elseif1);
+  \path [line] (elseif1) -- node[decisionAnswer] {F} (elseif2);
+  \path [line] (elseif2) -- node[decisionAnswer] {F} (else);
+
+  % Line Fim
+  \path [line] (instrucaoif) -- (fim);
+  \path [line] (instrucaoelseif1) -- (fim);
+  \path [line] (instrucaoelseif2) -- (fim);
+  \path [line] (instrucaoelse) -- (fim);
+\end{tikzpicture}
+
+% \begin{tikzpicture}[node distance = 1in, auto]
+%   \node [decision] (if) {if};
+%   \node [block, right of=if] (instrucaoif) {Instrução 1};
+
+%   \node [decision, below of=if] (elseif1) {else if};
+%   \node [block, right of=elseif1] (instrucaoelseif1) {Instrução 2};
+
+%   \node [decision, below of=elseif1] (elseif2) {else if};
+%   \node [block, right of=elseif2] (instrucaoelseif2) {Instrução 3};
+
+%   \node [decision, below of=elseif2] (else) {else};
+%   \node [block, right of=else] (instrucaoelse) {Instrução 4};
+
+%   \node [block, right of=instrucaoelseif1, node distance=2in] (fim) {Fim};
+
+%   % Line V
+%   %\path [line] (if) -- node [near start] {V} (instrucaoif);
+%   \path [line] (if) -- node[decisionAnswer] {V} (instrucaoif);
+%   \path [line] (elseif1) -- node[decisionAnswer] {V} (instrucaoelseif1);
+%   \path [line] (elseif2) -- node[decisionAnswer] {V} (instrucaoelseif2);
+%   \path [line] (else) -- (instrucaoelse);
+
+%   % Line F
+%   \path [line] (if) -- node[decisionAnswer] {F} (elseif1);
+%   \path [line] (elseif1) -- node[decisionAnswer] {F} (elseif2);
+%   \path [line] (elseif2) -- node[decisionAnswer] {F} (else);
+
+%   % Line Fim
+%   \path [line] (instrucaoif) -- (fim);
+%   \path [line] (instrucaoelseif1) -- (fim);
+%   \path [line] (instrucaoelseif2) -- (fim);
+%   \path [line] (instrucaoelse) -- (fim);
+% \end{tikzpicture}
+    
+% \begin{tikzpicture}[node distance = 2cm, auto]
+%     % Place nodes
+%     \node [block] (init) {initialize model};
+%     \node [cloud, left of=init] (expert) {expert};
+%     \node [cloud, right of=init] (system) {system};
+%     \node [block, below of=init] (identify) {identify candidate models};
+%     \node [block, below of=identify] (evaluate) {evaluate candidate models};
+%     \node [block, left of=evaluate, node distance=3cm] (update) {update model};
+%     \node [decision, below of=evaluate] (decide) {is best candidate better?};
+%     \node [block, below of=decide, node distance=3cm] (stop) {stop};
+%     % Draw edges
+%     \path [line] (init) -- (identify);
+%     \path [line] (identify) -- (evaluate);
+%     \path [line] (evaluate) -- (decide);
+%     \path [line] (decide) -| node [near start] {yes} (update);
+%     \path [line] (update) |- (identify);
+%     \path [line] (decide) -- node {no}(stop);
+%     \path [line,dashed] (expert) -- (init);
+%     \path [line,dashed] (system) -- (init);
+%     \path [line,dashed] (system) |- (evaluate);
+% \end{tikzpicture}
