@@ -6,4 +6,6 @@ package alfa.dao;
  */
 abstract public class PessoaDao extends AbstractDao {
 
+    
+
 }

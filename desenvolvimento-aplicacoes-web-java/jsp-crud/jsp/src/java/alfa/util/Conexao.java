@@ -13,21 +13,12 @@ import java.sql.SQLException;
 public class Conexao {
 
     private static Connection conexao;
-
-    //private static final String URL = "jdbc:mysql://localhost:3306/jsp";
-    //private static final String USUARIO = "root";
-    //private static final String SENHA = "123456";
     
     public static Connection getConexao() {
         if (conexao == null) {
             try {
-                // Mysql
-                // DriverManager.registerDriver(new Driver());
-                // return DriverManager.getConnection(URL, USUARIO, SENHA);
-
-                // Sqlite
                 DriverManager.registerDriver(new JDBC());
-                conexao = DriverManager.getConnection("jdbc:sqlite:DIRETORIO_BD/escola.sqlite.db");
+                conexao = DriverManager.getConnection("jdbc:sqlite:/Users/faculdadealfa/chiquitto/jsp-crud-aula/caso-uso-escola/banco/escola.sqlite.db");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
