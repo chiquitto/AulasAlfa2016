@@ -1,0 +1,11 @@
+CREATE TABLE "mesa" (
+	`idmesa`	INTEGER PRIMARY KEY AUTOINCREMENT,
+	`valorpago`	NUMERIC
+);
+
+CREATE TABLE "produto" (
+	`idproduto`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`idmesa`	INTEGER NOT NULL,
+	`descricao`	TEXT NOT NULL,
+	`valor`	NUMERIC NOT NULL
+);
