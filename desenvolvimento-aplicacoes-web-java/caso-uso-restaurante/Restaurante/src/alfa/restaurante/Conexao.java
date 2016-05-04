@@ -18,7 +18,7 @@ public class Conexao {
         if (conexao == null) {
             try {
                 DriverManager.registerDriver(new JDBC());
-                conexao = DriverManager.getConnection("jdbc:sqlite:/Volumes/9996-2813/data/AulasAlfa2016/desenvolvimento-aplicacoes-web-java/caso-uso-restaurante/banco/restaurante.sqlite.db");
+                conexao = DriverManager.getConnection("jdbc:sqlite:/Users/faculdadealfa/chiquitto/caso-uso-restaurante/banco/restaurante.sqlite.db");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

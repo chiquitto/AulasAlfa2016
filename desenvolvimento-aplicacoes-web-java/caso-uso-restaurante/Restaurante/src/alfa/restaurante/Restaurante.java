@@ -26,6 +26,7 @@ public class Restaurante {
             
             return new Mesa(rs.getInt(1));
         } catch (SQLException ex) {
+            ex.printStackTrace();
             return null;
         }
     }
