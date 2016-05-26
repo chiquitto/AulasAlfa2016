@@ -36,7 +36,6 @@
                         <a href="endereco-editar.jsp?idpessoa={idpessoa}">[endereco]</a>
                     </td>
                 </tr>
-                <% }%>
             </tbody>
         </table>
     </body>

@@ -1,3 +1,9 @@
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="alfa.model.Professor"%>
+<%@page import="java.util.List"%>
+<%@page import="alfa.dao.ProfessorDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,18 +31,28 @@
                 </tr>
             </thead>
             <tbody>
+                <%
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                
+                Locale lo = new Locale("pt", "br");
+                NumberFormat nf = NumberFormat.getCurrencyInstance(lo);
+                    
+                ProfessorDao p = new ProfessorDao();
+                List<Professor> professores = p.getAll();
+                for (Professor professor : professores) {
+                %>
                 <tr>
-                    <td>{idpessoa}</td>
-                    <td>{nome}</td>
-                    <td>{nascimento}</td>
-                    <td>{salario}</td>
+                    <td><%= professor.getIdpessoa() %></td>
+                    <td><%= professor.getNome() %></td>
+                    <td><%= professor.getNascimento().format(df) %></td>
+                    <td><%= nf.format(professor.getSalario()) %></td>
                     <td>
-                        <a href="professor-editar.jsp?idpessoa={idpessoa}">[editar]</a>
-                        <a href="professor-apagar.jsp?idpessoa={idpessoa}">[apagar]</a>
-                        <a href="endereco-editar.jsp?idpessoa={idpessoa}">[endereco]</a>
+                        <a href="professor-editar.jsp?idpessoa=<%= professor.getIdpessoa() %>">[editar]</a>
+                        <a href="professor-apagar.jsp?idpessoa=<%= professor.getIdpessoa() %>">[apagar]</a>
+                        <a href="endereco-editar.jsp?idpessoa=<%= professor.getIdpessoa() %>">[endereco]</a>
                     </td>
                 </tr>
-                <% }%>
+                <% } %>
             </tbody>
         </table>
     </body>
