@@ -2,14 +2,13 @@ package br.com.chiquitto.aula.jdbcescola.dao;
 
 import br.com.chiquitto.aula.jdbcescola.Conexao;
 import br.com.chiquitto.aula.jdbcescola.exception.RowNotFoundException;
-import br.com.chiquitto.aula.jdbcescola.vo.Endereco;
+import br.com.chiquitto.aula.jdbcescola.vo.Pessoa;
 import br.com.chiquitto.aula.jdbcescola.vo.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,22 +18,6 @@ import java.util.List;
  * @author chiquitto
  */
 public class UsuarioDao extends PessoaDao {
-    
-    public void apagar(Usuario usuario) {
-        try {
-            Endereco endereco = new Endereco();
-            endereco.setIdpessoa(usuario.getIdpessoa());
-            new EnderecoDao().apagar(endereco);
-
-            String sqlDelete = "Delete From pessoa Where (idpessoa = ?) And (tipo = 3)";
-            PreparedStatement stmtDelete = Conexao.getConexao().prepareStatement(sqlDelete);
-            stmtDelete.setInt(1, usuario.getIdpessoa());
-            stmtDelete.executeUpdate();
-            stmtDelete.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
 
     public void cadastrar(Usuario usuario) {
         String sql = "Insert Into pessoa"
@@ -66,8 +49,6 @@ public class UsuarioDao extends PessoaDao {
     }
 
     public void editar(Usuario usuario) {
-        // TODO: Verificar se email esta repetido
-
         String sql = "Update pessoa"
                 + " Set "
                 + " nome = ?,"
@@ -105,25 +86,10 @@ public class UsuarioDao extends PessoaDao {
             Statement st = Conexao.getConexao().createStatement();
             ResultSet rs = st.executeQuery("Select idpessoa, senha, nome, fone, email, nascimento From pessoa Where tipo=3");
 
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
             while (rs.next()) {
-                Usuario usuario = new Usuario();
-                usuario.setIdpessoa(rs.getInt("idpessoa"));
-                usuario.setSenha(rs.getString("senha"));
-                usuario.setNome(rs.getString("nome"));
-                usuario.setFone(rs.getString("fone"));
-                usuario.setEmail(rs.getString("email"));
-
-                try {
-                    usuario.setNascimento(df.parse(rs.getString("nascimento")));
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                }
-
+                Usuario usuario = (Usuario) recordset2Vo(rs, Pessoa.TIPO_USUARIO);
                 usuarios.add(usuario);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -131,38 +97,28 @@ public class UsuarioDao extends PessoaDao {
         return usuarios;
     }
 
-    public Usuario getOne(int idpessoa) throws RowNotFoundException {
+    public Usuario getByEmailSenha(Usuario usuario) throws RowNotFoundException {
         try {
-            String sql = "Select idpessoa, nome, fone, email, senha, nascimento From pessoa Where (tipo=3) And (idpessoa = ?)";
+            String sql = "Select idpessoa, nome, fone, email, senha, nascimento From pessoa Where (tipo=3) And (email = ?) And (senha = ?)";
 
             PreparedStatement stmt = Conexao.getConexao().prepareStatement(sql);
-            stmt.setInt(1, idpessoa);
-
+            stmt.setString(1, usuario.getEmail());
+            stmt.setString(2, usuario.getSenha());
+            
             ResultSet rs = stmt.executeQuery();
-
+            
             if (rs.next()) {
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-                Usuario usuario = new Usuario();
-                usuario.setIdpessoa(rs.getInt("idpessoa"));
-                usuario.setNome(rs.getString("nome"));
-                usuario.setFone(rs.getString("fone"));
-                usuario.setEmail(rs.getString("email"));
-                usuario.setSenha(rs.getString("senha"));
-
-                try {
-                    usuario.setNascimento(df.parse(rs.getString("nascimento")));
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                }
-
-                return usuario;
+                Usuario usuario2 = (Usuario) recordset2Vo(rs, Pessoa.TIPO_USUARIO);
+                return usuario2;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         throw new RowNotFoundException();
+    }
+
+    public Usuario getOne(int idpessoa) throws RowNotFoundException {
+        return (Usuario) super.getOne(idpessoa);
     }
 }

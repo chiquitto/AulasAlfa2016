@@ -2,15 +2,11 @@ package br.com.chiquitto.aula.jdbcescola.dao;
 
 import br.com.chiquitto.aula.jdbcescola.Conexao;
 import br.com.chiquitto.aula.jdbcescola.exception.RowNotFoundException;
-import br.com.chiquitto.aula.jdbcescola.vo.Aluno;
 import br.com.chiquitto.aula.jdbcescola.vo.Cidade;
-import br.com.chiquitto.aula.jdbcescola.vo.Endereco;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +29,6 @@ public class CidadeDao extends AbstractDao {
     }
 
     public void cadastrar(Cidade cidade) {
-        // TODO: Verificar se cidade esta repetido
-
         String sql = "Insert Into cidade"
                 + " (cidade)"
                 + " Values"
@@ -58,8 +52,6 @@ public class CidadeDao extends AbstractDao {
     }
 
     public void editar(Cidade cidade) {
-        // TODO: Verificar se cidade esta repetido
-
         String sql = "Update cidade"
                 + " Set "
                 + " cidade = ?"
