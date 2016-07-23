@@ -1,4 +1,0 @@
-Usuario.getByEmailSenha
-Pessoa.apagar
-Pessoa.recordset2Vo
-Pessoa.getOne
