@@ -11,21 +11,28 @@
         <h:form>
             <h:panelGrid columns="3">
                 <h:outputLabel value="Nome" for="nome" />
-                <h:inputText id="nome" value="#{usuarioCreateMb.usuario.nome}" label="Nome" />
+                <h:inputText id="nome" value="#{usuarioCreateMb.usuario.nome}" label="Nome">
+                    <f:converter converterId="maiusculoConverter" />
+                </h:inputText>
                 <h:message for="nome" />
 
                 <h:outputLabel value="Nascimento" for="nascimento" />
                 <h:inputText id="nascimento" value="#{usuarioCreateMb.usuario.nascimento}" label="Nascimento" required="true">
                     <f:convertDateTime/>
+                    <f:validator validatorId="idadeValidator" />
                 </h:inputText>
                 <h:message for="nascimento" />
 
                 <h:outputLabel value="Telefone" for="fone" />
-                <h:inputText id="fone" value="#{usuarioCreateMb.usuario.fone}" label="Telefone" />
+                <h:inputText id="fone" value="#{usuarioCreateMb.usuario.fone}" label="Telefone">
+                    <f:converter converterId="telefoneConverter" />
+                </h:inputText>
                 <h:message for="fone" />
 
                 <h:outputLabel value="E-mail" for="email" />
-                <h:inputText id="email" value="#{usuarioCreateMb.usuario.email}" label="E-mail" />
+                <h:inputText id="email" value="#{usuarioCreateMb.usuario.email}" label="E-mail">
+                    <f:validator validatorId="emailValidator" />
+                </h:inputText>
                 <h:message for="email" />
 
                 <h:outputLabel value="Senha" for="senha" />

@@ -1,5 +1,6 @@
 package mb;
 
+import br.com.chiquitto.aula.jdbcescola.dao.UsuarioDao;
 import br.com.chiquitto.aula.jdbcescola.vo.Usuario;
 import javax.faces.bean.ManagedBean;
 
@@ -15,7 +16,10 @@ public class UsuarioCreateMb {
         this.usuario = usuario;
     }
     
-    public void salvar() {
+    public String salvar() {
+        UsuarioDao dao = new UsuarioDao();
+        dao.cadastrar(usuario);
         
+        return "/usuario/listar.xhtml";
     }
 }
