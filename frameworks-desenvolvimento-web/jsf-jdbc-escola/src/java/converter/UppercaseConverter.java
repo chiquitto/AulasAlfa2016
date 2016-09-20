@@ -5,12 +5,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter("maiusculoConverter")
-public class MaiusculoConverter implements Converter {
+@FacesConverter("uppercaseConverter")
+public class UppercaseConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        return value.toUpperCase();
+        return ((String) value).toUpperCase();
     }
 
     @Override

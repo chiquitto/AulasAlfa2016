@@ -11,21 +11,20 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class UsuarioUpdateMb {
+
     private Usuario usuario = new Usuario();
-    
+
     public Usuario getUsuario() {
         return usuario;
     }
     
-    public void loadUsuario() {
+    public void loadData() {
         UsuarioDao dao = new UsuarioDao();
         try {
             usuario = dao.getOne(usuario.getIdpessoa());
-        } catch (RowNotFoundException e) {
-            FacesMessage f = new FacesMessage("Usuário inexistente");
-            f.setSeverity(FacesMessage.SEVERITY_ERROR);
-            
-            FacesContext.getCurrentInstance().addMessage(null, f);
+        } catch (RowNotFoundException ex) {
+            FacesMessage msg = new FacesMessage("Usuario inexistente");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
     
@@ -33,6 +32,6 @@ public class UsuarioUpdateMb {
         UsuarioDao dao = new UsuarioDao();
         dao.editar(usuario);
         
-        return "/usuario/listar.xhtml";
+        return "/usuario/lista.xhtml";
     }
 }
