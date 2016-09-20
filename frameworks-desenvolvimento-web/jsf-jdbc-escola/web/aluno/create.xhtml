@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h1>Cadastro de aluno</h1>
+        
+        <h:form>
+            <h:panelGrid columns="3">
+                <h:outputLabel value="Numero" for="numero" />
+                <h:inputText id="numero" value="#{alunoCreateMb.aluno.numero}">
+                    <f:validator validatorId="numeroValidator" />
+                </h:inputText>
+                <h:message for="numero" />
+                
+                <h:outputLabel value="Nome" for="nome"/>
+                <h:inputText id="nome" value="#{alunoCreateMb.aluno.nome}" />
+                <h:message for="nome" />
+                
+                <h:outputLabel value="Nascimento" for="nascimento" />
+                <h:inputText id="nascimento" value="#{alunoCreateMb.aluno.nascimento}" >
+                    <f:convertDateTime />
+                </h:inputText>
+                <h:message for="nascimento" />
+                
+                <h:outputLabel value="Email" for="email" />
+                <h:inputText id="email" value="#{alunoCreateMb.aluno.email}" />
+                <h:message for="email" />
+                
+                <h:outputLabel value="Telefone" for="fone" />
+                <h:inputText id="fone" value="#{alunoCreateMb.aluno.fone}" >
+                    <f:converter converterId="telefoneConverter" />
+                </h:inputText>
+                <h:message for="fone" />
+                
+            </h:panelGrid>
+            
+            <h:commandLink action="#{alunoCreateMb.salvar()}" value="Salvar" />
+        </h:form>
+    </h:body>
+</html>
+

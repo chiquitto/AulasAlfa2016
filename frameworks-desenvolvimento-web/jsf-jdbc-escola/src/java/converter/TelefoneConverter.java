@@ -1,5 +1,6 @@
 package converter;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -16,6 +17,9 @@ public class TelefoneConverter implements Converter{
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         String s = (String) value;
+        if (s.length() < 10) {
+            return "";
+        }
         
         String r = "(";
         r += s.substring(0, 2);
